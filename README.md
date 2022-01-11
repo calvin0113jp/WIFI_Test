@@ -10,6 +10,9 @@ pip install -r requirements.txt
 
 Flow
 -----------------
+<img src="./Flow/Automation WIFI Test Environment.jpg" style="zoom:50%" />
+
+
 1. 把相關的testcase 寫好後,修改testsuites.cfg / tests/新增test case
 2. 新增start.demo.sh 方便測試人員使用
 3. 輸入相關資訊,執行測試,測試結束發信至測試人員的mail 
