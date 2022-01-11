@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 	
+  <style type="text/css">
+  body {font-family: Verdana;}
+  table.results {border-spacing: 0;
+                 border-collapse: collapse;
+                 font-size: 10pt;}
+  tr.even {background-color: #f1f1f1;}
+  table tr:hover {background-color: #dedeef;}
+  tr td:nth-child(1) {text-align: right;}
+  tr td:nth-child(2) {text-align: center;}
+  .ok {color: green;}
+  .uok {color: lightgreen;}
+  .fail {color: red;}
+  .efail {color: orange;}
+  .skip {color: gold;}
+  </style>
+  <title>Results</title>
+</head>
+
+<body>
+  <table style="width:640px;border-bottom: thin solid;">
+    <tr>
+      <td style="text-align:left;">
+        <h2 style="margin: 0px;">Test Result</h2>
+        Board: AutoTest
+      </td>
+
+      <td><a href="calvin">
+      </td>
+    </tr>
+  </table>
+
+  <br style="clear:both;" />
+
+  <table class="results">
+    <caption style="text-align: left">Summary</caption>
+    <tr><td class="ok">OK: 8</td></tr>
+  </table>
+
+  <br style="clear:both;" />
+
+  <table class="results">
+    <caption style="text-align: left">Failures</caption>
+    <tr><td>None</td></tr>
+  </table>
+
+  <br style="clear:both;" />
+
+  <table class="results">
+    <caption style="text-align: left">Full Results</caption>
+    <tr>
+      <th>#</th>
+      <th>Result</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Time</th>
+    </tr>
+    <tr class="even"><td>1</td><td class="ok">OK</td><td>Nuclias_device_webUI_Login_PC1_HTTP</td><td>&emsp;Passed , PC1 is able to login webgui and see DUT status without any problem</td><td>20.56s</td></tr>
+<tr class="odd"><td>2</td><td class="ok">OK</td><td>Nuclias_device_webUI_Login_STA_HTTP</td><td>&emsp;Passed , STA is able to login webgui and see DUT status without any problem</td><td>50.86s</td></tr>
+<tr class="even"><td>3</td><td class="ok">OK</td><td>Nuclias_device_device_webUI_OverviewPage_PC1</td><td>&emsp;Passed - The info was able to display correctly</td><td>20.86s</td></tr>
+<tr class="odd"><td>4</td><td class="ok">OK</td><td>Nuclias_device_device_webUI_OverviewPage_STA</td><td>&emsp;Passed - The info was able to display correctly</td><td>49.71s</td></tr>
+<tr class="even"><td>5</td><td class="ok">OK</td><td>Nuclias_device_webUI_Firmware_Upgrade_PC1</td><td>&emsp;1.Passed - Firmware can be upgraded successful<p>&emsp;2.Passed - Firmware version disaply correctly in local setting and status<p></td><td>277.79s</td></tr>
+<tr class="odd"><td>6</td><td class="ok">OK</td><td>Nuclias_device_webUI_Firmware_Upgrade_fake_image_PC1</td><td>&emsp;1.Passed - Warning page display correctly</td><td>92.71s</td></tr>
+<tr class="even"><td>7</td><td class="ok">OK</td><td>Nuclias_device_webUI_Firmware_Upgrade_STA</td><td>&emsp;1.Passed - Firmware can be upgraded successful<p>&emsp;2.Passed - Firmware version disaply correctly in local setting and status<p></td><td>303.88s</td></tr>
+<tr class="odd"><td>8</td><td class="ok">OK</td><td>Nuclias_device_webUI_Firmware_Upgrade_fake_image_STA</td><td>&emsp;1.Passed - Warning page display correctly</td><td>62.53s</td></tr>
+  </table>
+
+  Total test time: 14 minutes.<br>
+  <br>
+  <br>
+  See <a href="NoneconsoleFull">full test output</a> or <a href="Nonerebuild/parameterized">see parameters and retest</a>.<br>
+  <br>
+  Board access:<br>
+  <ul>
+    <li>Name: dba</li>
+    <li>Router console: cu -l /dev/ttyUSB0 -s 115200 -f</li>
+    <li>Location: unknown</li>
+    <li>lan debian</li>
+
+  </ul>
+  Changes: None
+  <div style="width:640px;border-top: thin solid;font-size: 10pt">
+  Questions? Email <a href="mailto:calvin_lee">calvin_lee</a>.
+  </div>
+</body>
+</html>
