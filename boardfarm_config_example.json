@@ -1,0 +1,219 @@
+{
+    "rpi3-1": {
+        "board_type": "rpi3",
+        "conn_cmd": "cu -l /dev/ttyUSB0 -s 57600",
+	"devices": [
+		{
+			"type": "debian",
+			"name": "wan",
+			"pre_cmd_host": "docker build -t bft:node bft-node",
+			"cmd": "docker run --name wan --privileged -it bft:node /bin/bash",
+			"post_cmd_host": "sudo ip link set netns $(docker inspect --format '{{.State.Pid}}' wan) dev enx00249b14dc6e",
+			"post_cmd": "ip link set enx00249b14dc6e name eth1",
+			"cleanup_cmd": "docker stop wan; docker rm wan; sudo ip link set dev enx00249b14dc6e down",
+			"color": "cyan",
+			"options": "tftpd-server"
+		},
+		{
+			"type": "debian",
+			"name": "lan",
+			"pre_cmd_host": "docker build -t bft:node bft-node",
+			"cmd": "docker run --name lan --privileged -it bft:node /bin/bash",
+			"post_cmd_host": "sudo ip link set netns $(docker inspect --format '{{.State.Pid}}' lan) dev enxc05627904e8c",
+			"post_cmd": "ip link set enxc05627904e8c name eth1",
+			"cleanup_cmd": "docker stop lan; docker rm lan; sudo ip link set dev enxc05627904e8c down",
+			"color": "blue"
+		}
+	],
+	"connection_type": "local_serial",
+        "notes": "Rpi3 device with docker containers attached to WAN/LAN"
+    },
+    "qemux86-1": {
+        "board_type": "qemux86",
+        "conn_cmd": "sudo qemu-system-i386 -m 256 -nographic --enable-kvm -netdev tap,id=wan,ifname=${wan_iface} -device e1000,netdev=wan -netdev tap,id=lan,ifname=${lan_iface} -device e1000,netdev=lan",
+        "devices": [
+                {
+                        "type": "debian",
+                        "name": "wan",
+                        "pre_cmd_host": "docker build -t bft:node bft-node",
+                        "cmd": "docker run --name wan-${uniq_id} --privileged -it bft:node /bin/bash",
+                        "post_cmd_host": "sudo ip link set netns $(docker inspect --format '{{.State.Pid}}' wan-${uniq_id}) dev ${wan_iface}",
+                        "post_cmd": "ip link set ${wan_iface} name eth1",
+                        "cleanup_cmd": "docker stop wan-${uniq_id}; docker rm wan-${uniq_id}",
+                        "color": "cyan",
+                        "options": "tftpd-server"
+                },
+                {
+                        "type": "debian",
+                        "name": "lan",
+                        "pre_cmd_host": "docker build -t bft:node bft-node",
+                        "cmd": "docker run --name lan-${uniq_id} --privileged -p 9909:9909 -it bft:node /bin/bash",
+                        "post_cmd_host": "sudo ip link set netns $(docker inspect --format '{{.State.Pid}}' lan-${uniq_id}) dev ${lan_iface}",
+                        "post_cmd": "ip link set ${lan_iface} name eth1",
+                        "cleanup_cmd": "docker stop lan-${uniq_id}; docker rm lan-${uniq_id}",
+                        "color": "blue",
+			"http_proxy": "localhost:9909"
+                }
+        ],
+        "connection_type": "local_serial",
+        "notes": "QEMU emulated devices"
+    },
+    "qemux86-openwrt-1": {
+        "board_type": "qemux86-openwrt",
+        "conn_cmd": "sudo qemu-system-i386 -m 256 -nographic --enable-kvm -netdev tap,id=wan,ifname=${wan_iface} -device e1000,netdev=wan -netdev tap,id=lan,ifname=${lan_iface} -device e1000,netdev=lan",
+        "devices": [
+                {
+                        "type": "debian",
+                        "name": "lan",
+                        "pre_cmd_host": "docker build -t bft:node bft-node",
+                        "cmd": "docker run --name wan-${uniq_id} --privileged -it bft:node /bin/bash",
+                        "post_cmd_host": "sudo ip link set netns $(docker inspect --format '{{.State.Pid}}' wan-${uniq_id}) dev ${wan_iface}",
+                        "post_cmd": "ip link set ${wan_iface} name eth1",
+                        "cleanup_cmd": "docker stop wan-${uniq_id}; docker rm wan-${uniq_id}",
+                        "color": "cyan",
+                        "options": "tftpd-server"
+                },
+                {
+                        "type": "debian",
+                        "name": "wan",
+                        "pre_cmd_host": "docker build -t bft:node bft-node",
+                        "cmd": "docker run --name lan-${uniq_id} --privileged -p 9910:9910 -it bft:node /bin/bash",
+                        "post_cmd_host": "sudo ip link set netns $(docker inspect --format '{{.State.Pid}}' lan-${uniq_id}) dev ${lan_iface}",
+                        "post_cmd": "ip link set ${lan_iface} name eth1",
+                        "cleanup_cmd": "docker stop lan-${uniq_id}; docker rm lan-${uniq_id}",
+                        "color": "blue",
+			"http_proxy": "localhost:9910"
+                }
+        ],
+        "connection_type": "local_serial",
+        "notes": "QEMU emulated devices"
+    },
+    "mtk_old": {
+        "board_type": "Unknown",
+        "conn_cmd": "cu -l /dev/ttyUSB0 -s 57600 -f",
+	"devices": [		
+		{
+			"type": "debian",
+			"name": "lan",
+			"cmd": "docker run --net=host --name lan --privileged -it bft:node /bin/bash",
+			"post_cmd_host": "sudo ip link set netns $(docker inspect --format '{{.State.Pid}}' lan) dev eth1",
+			"post_cmd": "ip link set eth1 name eth1",
+			"cleanup_cmd": "docker stop lan; docker rm lan; ip link set dev eth1 down; ip link set dev eth1 up",
+			"color": "yellow"
+		}
+
+	],
+	"connection_type": "local_serial",
+        "notes": "Unknown device with docker containers attached to WAN/LAN"
+    },
+    "mtk_new": {
+        "board_type": "Unknown",
+        "conn_cmd": "cu -l /dev/ttyUSB0 -s 115200 -f",
+	"devices": [		
+		{
+			"type": "debian",
+			"name": "lan",
+			"cmd": "docker run --net=host --name lan --privileged -it bft:node /bin/bash",
+			"post_cmd_host": "sudo ip link set netns $(docker inspect --format '{{.State.Pid}}' lan) dev eth1",
+			"post_cmd": "ip link set eth1 name eth1",
+			"cleanup_cmd": "docker stop lan; docker rm lan; ip link set dev eth1 down; ip link set dev eth1 up",
+			"color": "yellow"
+		}
+
+	],
+	"connection_type": "local_serial",
+        "notes": "Unknown device with docker containers attached to WAN/LAN"
+    },
+    "mtk_web": {
+        "board_type": "Unknown",
+        "conn_cmd": "cu -l /dev/ttyUSB0 -s 57600 -f",
+	"devices": [		
+		{
+			"type": "debian",
+			"name": "lan",
+			"cmd": "docker run --net=host --name lan --privileged -v /tftpboot/elecom:/home -it selenium2 /bin/bash ",	
+			"cleanup_cmd": "docker stop lan; docker rm lan",
+			"color": "cyan"
+		}
+
+	],
+	"connection_type": "local_serial",
+        "notes": "Unknown device with docker containers attached to WAN/LAN"
+    },
+    "dlink": {
+        "board_type": "Unknown",
+	"conn_cmd": "cu -l /dev/ttyUSB0 -s 57600 -f",
+	"devices": [
+		{
+			"type": "debian",
+			"name": "lan",
+			"cmd": "docker run --name lan --privileged -v /tftpboot/web_dlink:/home -it selenium3 /bin/bash",
+			"cleanup_cmd": "docker stop lan; docker rm lan",
+			"color": "cyan"
+		}
+	],
+	"connection_type": "local_serial",
+        "notes": "dlink device with docker containers attached to LAN"
+    },
+    "dlink_firefox": {
+        "board_type": "Unknown",
+	"conn_cmd": "cu -l /dev/ttyUSB0 -s 115200 -f",
+	"devices": [
+		{
+			"type": "debian",
+			"name": "lan",
+			"cmd": "docker run --name lan --privileged -v /tftpboot/web_dlink:/home -it -u root firefox /bin/bash",
+			"cleanup_cmd": "docker stop lan; docker rm lan",
+			"color": "cyan"
+		}
+	],
+	"connection_type": "local_serial",
+        "notes": "dlink device with docker containers attached to LAN"
+    },
+	"dlink_dut": {
+        "board_type": "Unknown",
+	"conn_cmd": "cu -l /dev/ttyUSB0 -s 115200 -f",
+	"devices": [
+		{
+			"type": "debian",
+			"name": "lan",
+			"cmd": "docker run --name lan --privileged -v /tftpboot/web_dlink:/home -it selenium3 /bin/bash",
+			"cleanup_cmd": "docker stop lan; docker rm lan",
+			"color": "cyan"
+		}
+	],
+	"connection_type": "local_serial",
+        "notes": "dlink device with docker containers attached to LAN"
+    },
+	"dba": {
+        "board_type": "Unknown",
+	"conn_cmd": "cu -l /dev/ttyUSB0 -s 115200 -f",
+	"devices": [
+		{
+			"type": "debian",
+			"name": "lan",
+			"cmd": "docker run --name lan --privileged -v /tftpboot/dba:/home -it selenium3 /bin/bash",
+			"cleanup_cmd": "docker stop lan; docker rm lan",
+			"color": "cyan"
+		}
+	],
+	"connection_type": "local_serial",
+        "notes": "dlink device with docker containers attached to LAN"
+    },
+    "eap": {
+        "board_type": "Unknown",
+	"conn_cmd": "cu -l /dev/ttyUSB0 -s 57600 -f",
+	"devices": [
+		{
+			"type": "debian",
+			"name": "lan",
+			"cmd": "docker run --net=host --name lan --privileged -it selenium2 /bin/bash",
+			"cleanup_cmd": "docker stop lan; docker rm lan",
+			"color": "cyan"
+		}
+	],
+	"connection_type": "local_serial",
+        "notes": "dlink device with docker containers attached to LAN"
+    }
+}
+

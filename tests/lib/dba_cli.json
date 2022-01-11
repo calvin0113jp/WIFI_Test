@@ -1,0 +1,21 @@
+{
+    "get": {
+        "management":"get management",
+        "mac":"get management mac",
+        "ip":"get management ip",
+        "static-ip":"get management static-ip",
+        "static-mask":"get management static-mask",
+        "static-gateway":"get management static-gateway",
+        "vlan-id":"get management vlan-id",
+        "vlan-enable":"get management vlan-enable",
+        "vlan-mode":"get management vlan-mode",
+        "dhcp-status":"get management dhcp-status",
+        "ipv6-enable":"get management ipv6-enable",
+        "proxy-enable":"get management proxy-enable",
+        "proxy-host":"get management proxy-host",
+        "proxy-port":"get management proxy-port",
+        "link-aggregation-mode":"get management link-aggregation-mode",
+        "ntp":"get ntp server",
+        "reboot":"reboot"
+    }
+}
