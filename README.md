@@ -13,9 +13,16 @@ Flow
 <img src="./Flow/Automation WIFI Test Environment.jpg" style="zoom:50%" />
 <img src="./Flow/Automation_wifi_flow.jpg" style="zoom:50%" />
 
-1. 把相關的testcase 寫好後,修改testsuites.cfg / tests/新增test case
-2. 新增start.demo.sh 方便測試人員使用
-3. 把待測的設備接上系統,輸入相關資訊,執行測試,測試結束發信至測試人員的mail 
+1. 把相關的testcase 寫好後,修改testsuites.cfg / boardfarm_config_example.json / tests - 新增test case
+2. 測試機器加入docker image 測試環境 ,以本機環境為例
+   ```
+   REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+   selenium3           latest              702fd323c094        4 months ago        1.89GB (Include chromedriver , chrome)
+   firefox             latest              b0f32de1a2ea        13 months ago       1.34GB (Include firefox driver , firefox)
+   ```
+   
+3. 新增start.demo.sh 方便測試人員使用
+4. 把待測的設備接上系統,輸入相關資訊,執行測試,測試結束發信至測試人員的mail 
 
 新增功能
 -----------------
@@ -26,7 +33,7 @@ Flow
 3.mail repoter 採用 smtp 套件,來做用戶的報告產出
 
 
-大致上的階層如下
+大致上的階層範例如下
 ```
 my_overlay/
 ├── devices
@@ -39,6 +46,7 @@ my_overlay/
 │   └── foobar.py
 └── testsuites.cfg (testcases name)
 ```
+
 
 
 Reference
