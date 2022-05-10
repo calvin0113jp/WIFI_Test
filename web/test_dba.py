@@ -26,10 +26,10 @@ debug = 0
 if debug == 1:
  
     print ('debug=1')
-    check_file = r'D:/Projects/DLINK/DBA/webui_check.txt' # webui_check.txt
-    save_folder = r'D:/Projects/DLINK/DBA/' # other used , templatly save files
-    fw_file = r'E:/Projects/DLINK/DBA/FW/DBA-2820P_A1_FW2.04.001_WW.img'
-    fw_upgrade_folder = r'E:/Projects/DLINK/DBA/FW/'
+    check_file = r'D:/Projects/###/webui_check.txt' # webui_check.txt
+    save_folder = r'D:/Projects/###' # other used , templatly save files
+    fw_file = r'E:/Projects/###'
+    fw_upgrade_folder = r'E:/Projects/###'
 
     # Mapping /home/weblogin.txt
     select = 'debug'
